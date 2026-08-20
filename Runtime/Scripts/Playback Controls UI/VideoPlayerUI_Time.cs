@@ -1,30 +1,54 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Text;
-using UnityEngine.Video;
 using UnityEngine.UI;
+using TMPro;
 
-public class VideoPlayerUI_Time : VideoPlayerUI_Base
+namespace rlmg.Tools.MediaPlayers
 {
-	public Action<double,double> OnUpdateTime;
-
-	[HideInInspector]
-	private string timeText = "{0}:{1:00} | {2}:{3:00}";
-
-	private Text _text;
-	private StringBuilder _timeSB;
-	private int minDur, minPos, secDur, secPos;
-
-	protected override void Start()
+	/// <summary>
+	/// Timecode text UI display for video player.
+	/// </summary>
+	public class VideoPlayerUI_Time : VideoPlayerUI_Base
 	{
-		base.Start();
+		public Action<double,double> OnUpdateTime;
 
-		_text = GetComponent<Text>();
-		_timeSB  = new StringBuilder();
-		if (_text != null)
+		/// <summary>
+		/// Timecode text UI display for video player.
+		/// </summary>
+		public string formatting = "{0}:{1:00} | {2}:{3:00}";
+
+		/// <summary>
+		/// If true, text string will be wrapped with TMP monospace markup.
+		/// </summary>
+		public bool doMonospaceTMP = true;
+
+		/// <summary>
+		/// The em spacing used by the TMP monospace markup.
+		/// </summary>
+		public float monospacing = 2.75f;
+
+		/// <summary>
+		/// Legacy UI text for output
+		/// </summary>
+		private Text _textLegacy;
+
+		/// <summary>
+		/// TMP text for output
+		/// </summary>
+		private TMP_Text _textTMP;
+
+		private StringBuilder _timeSB;
+		private int minDur, minPos, secDur, secPos;
+
+		protected override void Start()
 		{
+			base.Start();
+
+			_textLegacy = GetComponent<Text>();
+			_textTMP = GetComponent<TMP_Text>();
+			_timeSB  = new StringBuilder();
+
 			OnUpdateTime = new Action<double, double>((pos, dur) => 
 			{
 				_timeSB.Length = 0;
@@ -43,31 +67,34 @@ public class VideoPlayerUI_Time : VideoPlayerUI_Base
 
 				};
 
-				_timeSB.AppendFormat(timeText, minPos, secPos, minDur, secDur);
-				_text.text = _timeSB.ToString();
+				_timeSB.AppendFormat(formatting, minPos, secPos, minDur, secDur);
+
+				if (_textLegacy != null)
+				{
+					_textLegacy.text = _timeSB.ToString();
+				}
+
+				if (_textTMP != null)
+				{
+					if (doMonospaceTMP)
+					{
+						_textTMP.text = "<mspace=" + monospacing + "em>" + _timeSB.ToString() + "</mspace>";
+
+					}
+					else
+					{
+						_textTMP.text = _timeSB.ToString();
+					}
+				}
 			});
 		}
-	}
 
-	void Update()
-	{
-		if (OnUpdateTime != null)
+		void Update()
 		{
-//			Debug.Log("player.clip.length = "+(player.clip == null ? 0f : player.clip.length));
-//			Debug.Log("Duration = "+Duration);
-
-			OnUpdateTime(player.time, Duration);
+			if (OnUpdateTime != null)
+			{
+				OnUpdateTime(player.time, Duration);
+			}
 		}
-
-		//Deselect the current GUI element to display the right color state
-//		if (_eventSystem)
-//		{  
-//			if (_eventSystem.currentSelectedGameObject == gameObject)
-//			{
-//				//Debug.Log("RESET");
-//				_eventSystem.SetSelectedGameObject(null);
-//			}
-//
-//		}
 	}
 }

@@ -1,23 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Video;
-
-public class VideoStreamingAssetURLHelper : MonoBehaviour
+﻿namespace rlmg.Tools.MediaPlayers
 {
-	public VideoPlayer videoPlayer;
-	public string videoPath;
+	using UnityEngine;
+	using UnityEngine.Video;
 
-	void Awake()
+	public class VideoStreamingAssetURLHelper : MonoBehaviour
 	{
-		if (videoPlayer == null)
-		{
-			videoPlayer = GetComponent<VideoPlayer>();
-		}
+		public VideoPlayer videoPlayer;
+		public string videoPath;
 
-		if (videoPlayer != null)
+		void Awake()
 		{
-			videoPlayer.url = Application.streamingAssetsPath + "/" + videoPath;
+			if (videoPlayer == null)
+			{
+				videoPlayer = GetComponent<VideoPlayer>();
+			}
+
+			if (videoPlayer != null)
+			{
+				videoPlayer.url = Application.streamingAssetsPath + "/" + videoPath;
+			}
 		}
 	}
 }

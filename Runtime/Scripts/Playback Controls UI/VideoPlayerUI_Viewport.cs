@@ -1,23 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 
-public class VideoPlayerUI_Viewport : VideoPlayerUI_Base
+namespace rlmg.Tools.MediaPlayers
 {
-	private RawImage viewportImage;
-
-	protected override void Start()
+	/// <summary>
+	/// Raw image display output for video player.
+	/// </summary>
+	public class VideoPlayerUI_Viewport : VideoPlayerUI_Base
 	{
-		base.Start();
+		private RawImage viewportImage;
 
-		viewportImage = GetComponent<RawImage>();
-
-		if (viewportImage != null && player != null && player.targetTexture != null)
+		protected override void Start()
 		{
-			//todo: generate render texture at same dimensions as video if one doesn't already exist
+			base.Start();
 
-			viewportImage.texture = player.targetTexture;
+			viewportImage = GetComponent<RawImage>();
+
+			if (viewportImage != null && player != null && player.targetTexture != null)
+			{
+				//todo: generate render texture at same dimensions as video if one doesn't already exist
+
+				viewportImage.texture = player.targetTexture;
+			}
 		}
 	}
 }
