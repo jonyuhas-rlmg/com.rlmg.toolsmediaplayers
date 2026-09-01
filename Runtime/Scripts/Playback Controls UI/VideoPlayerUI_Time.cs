@@ -1,32 +1,17 @@
-﻿using UnityEngine;
-using System;
-using System.Text;
-using UnityEngine.UI;
-using TMPro;
-
-namespace rlmg.Tools.MediaPlayers
+﻿namespace rlmg.Tools.MediaPlayers
 {
+	using UnityEngine;
+	using System;
+	using System.Text;
+	using UnityEngine.UI;
+	using TMPro;
+	
 	/// <summary>
 	/// Timecode text UI display for video player.
 	/// </summary>
 	public class VideoPlayerUI_Time : VideoPlayerUI_Base
 	{
 		public Action<double,double> OnUpdateTime;
-
-		/// <summary>
-		/// Timecode text UI display for video player.
-		/// </summary>
-		public string formatting = "{0}:{1:00} | {2}:{3:00}";
-
-		/// <summary>
-		/// If true, text string will be wrapped with TMP monospace markup.
-		/// </summary>
-		public bool doMonospaceTMP = true;
-
-		/// <summary>
-		/// The em spacing used by the TMP monospace markup.
-		/// </summary>
-		public float monospacing = 2.75f;
 
 		/// <summary>
 		/// Legacy UI text for output
@@ -37,6 +22,24 @@ namespace rlmg.Tools.MediaPlayers
 		/// TMP text for output
 		/// </summary>
 		private TMP_Text _textTMP;
+
+		/// <summary>
+		/// Timecode text UI display for video player.
+		/// </summary>
+		[SerializeField]
+		private string formatting = "{0}:{1:00} | {2}:{3:00}";
+
+		/// <summary>
+		/// If true, text string will be wrapped with TMP monospace markup.
+		/// </summary>
+		[SerializeField]
+		private bool doMonospaceForTMP = true;
+
+		/// <summary>
+		/// The em spacing used by the TMP monospace markup.
+		/// </summary>
+		[SerializeField]
+		private float monospacing = 2.75f;
 
 		private StringBuilder _timeSB;
 		private int minDur, minPos, secDur, secPos;
@@ -76,7 +79,7 @@ namespace rlmg.Tools.MediaPlayers
 
 				if (_textTMP != null)
 				{
-					if (doMonospaceTMP)
+					if (doMonospaceForTMP)
 					{
 						_textTMP.text = "<mspace=" + monospacing + "em>" + _timeSB.ToString() + "</mspace>";
 

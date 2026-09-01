@@ -1,106 +1,109 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-
-namespace rlmg.Tools.MediaPlayers
+﻿namespace rlmg.Tools.MediaPlayers
 {
-    /// <summary>
-    /// Play/pause UI button for video player.
-    /// </summary>
-    public class VideoPlayerUI_PlayPause : VideoPlayerUI_Base
-    {
-        /// <summary>
-        /// the button component
-        /// </summary>
-        public Button button;
+	using UnityEngine;
+	using UnityEngine.UI;
 
-        /// <summary>
-        /// the image UI for the dynamically swapped play/pause icons
-        /// </summary>
-        public Image buttonIconImage;
+	/// <summary>
+	/// Play/pause UI button for video player.
+	/// </summary>
+	[RequireComponent(typeof(Button))]
+	public class VideoPlayerUI_PlayPause : VideoPlayerUI_Base
+	{
+		/// <summary>
+		/// the button component
+		/// </summary>
+		private Button button;
 
-        /// <summary>
-        /// the dynamically swapped play icon sprite
-        /// </summary>
-        public Sprite playIcon;
+		/// <summary>
+		/// the image UI for the dynamically swapped play/pause icons
+		/// </summary>
+		[SerializeField]
+		private Image buttonIconImage;
 
-        /// <summary>
-        /// an optional override for the play icon if the video has reached its end
-        /// </summary>
-        public Sprite replayIcon;
+		/// <summary>
+		/// the dynamically swapped play icon sprite
+		/// </summary>
+		[SerializeField]
+		private Sprite playIcon;
 
-        /// <summary>
-        /// the dynamically swapped pause icon sprite
-        /// </summary>
-        public Sprite pauseIcon;
+		/// <summary>
+		/// an optional override for the play icon if the video has reached its end
+		/// </summary>
+		[SerializeField]
+		private Sprite replayIcon;
 
-        /// <summary>
-        /// is the pause state of the button interactable?
-        /// </summary>
-        public bool allowPausing = true;
+		/// <summary>
+		/// the dynamically swapped pause icon sprite
+		/// </summary>
+		[SerializeField]
+		private Sprite pauseIcon;
 
-        protected override void Start()
-        {
-            base.Start();
+		/// <summary>
+		/// is the pause state of the button interactable?
+		/// </summary>
+		[SerializeField]
+		private bool allowPausing = true;
 
-            if (button == null)
-            {
-                button = GetComponent<Button>();
-            }
+		protected override void Start()
+		{
+			base.Start();
 
-            if (button != null)
-            {
-                if (buttonIconImage == null)
-                {
-                    buttonIconImage = button.GetComponentInChildren<Image>();
-                }
+			button = GetComponent<Button>();
 
-                button.onClick.AddListener(() => OnClick());
-            }
-        }
+			if (button != null)
+			{
+				if (buttonIconImage == null)
+				{
+					buttonIconImage = button.GetComponentInChildren<Image>();
+				}
 
-        private void OnClick()
-        {
-            if (player == null)
-            {
-                return;
-            }
+				button.onClick.AddListener(() => OnClick());
+			}
+		}
 
-            if (player.isPlaying)
-            {
-                player.Pause();
-            }
-            else
-            {
-                player.Play();
-            }
-        }
+		private void OnClick()
+		{
+			if (player == null)
+			{
+				return;
+			}
 
-        private void Update()
-        {
-            if (player == null || buttonIconImage == null)
-            {
-                return;
-            }
+			if (player.isPlaying)
+			{
+				player.Pause();
+			}
+			else
+			{
+				player.Play();
+			}
+		}
 
-            if (player.isPlaying)
-            {
-                buttonIconImage.sprite = pauseIcon;
+		private void Update()
+		{
+			if (player == null || button == null || buttonIconImage == null)
+			{
+				return;
+			}
 
-                button.interactable = allowPausing;
-            }
-            else
-            {
-                if (Mathf.Abs(Duration - (float)player.time) < 0.1f && replayIcon != null)
-                {
-                    buttonIconImage.sprite = replayIcon;
-                }
-                else
-                {
-                    buttonIconImage.sprite = playIcon;
-                }
+			if (player.isPlaying)
+			{
+				buttonIconImage.sprite = pauseIcon;
 
-                button.interactable = true;
-            }
-        }
-    }
+				button.interactable = allowPausing;
+			}
+			else
+			{
+				if (Mathf.Abs(Duration - (float)player.time) < 0.1f && replayIcon != null)
+				{
+					buttonIconImage.sprite = replayIcon;
+				}
+				else
+				{
+					buttonIconImage.sprite = playIcon;
+				}
+
+				button.interactable = true;
+			}
+		}
+	}
 }

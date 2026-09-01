@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.Video;
-
-namespace rlmg.Tools.MediaPlayers
+﻿namespace rlmg.Tools.MediaPlayers
 {
+	using UnityEngine;
+	using UnityEngine.Video;
+	
 	/// <summary>
 	/// Base class that other video player UI elements derive from.
 	/// </summary>
@@ -11,7 +11,8 @@ namespace rlmg.Tools.MediaPlayers
 		/// <summary>
 		/// the built-in Unity VideoPlayer component at the core of everything
 		/// </summary>
-		public VideoPlayer player;
+		[SerializeField]
+		protected VideoPlayer player;
 
 		protected virtual void Start()
 		{

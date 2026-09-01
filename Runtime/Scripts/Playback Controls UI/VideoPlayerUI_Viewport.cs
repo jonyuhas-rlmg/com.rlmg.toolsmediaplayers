@@ -1,10 +1,12 @@
-﻿using UnityEngine.UI;
-
-namespace rlmg.Tools.MediaPlayers
+﻿namespace rlmg.Tools.MediaPlayers
 {
+	using UnityEngine;
+	using UnityEngine.UI;
+	
 	/// <summary>
 	/// Raw image display output for video player.
 	/// </summary>
+	[RequireComponent(typeof(RawImage))]
 	public class VideoPlayerUI_Viewport : VideoPlayerUI_Base
 	{
 		private RawImage viewportImage;

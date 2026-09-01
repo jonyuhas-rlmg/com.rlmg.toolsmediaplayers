@@ -1,20 +1,20 @@
-﻿using UnityEngine;
-using System;
-using UnityEngine.Video;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-
-namespace rlmg.Tools.MediaPlayers
+﻿namespace rlmg.Tools.MediaPlayers
 {
+	using UnityEngine;
+	using System;
+	using UnityEngine.Video;
+	using UnityEngine.UI;
+	using UnityEngine.EventSystems;
+	
 	/// <summary>
-	/// Seeker/scrubber UI for video player.
+	/// Seeker/scrubber UI for video player
 	/// </summary>
+	[RequireComponent(typeof(Slider))]
 	public class VideoPlayerUI_Seek : VideoPlayerUI_Base, IPointerDownHandler, IPointerUpHandler
 	{
 		public Action<float> OnDragged;
 
-		private Slider _slider;
-		public Slider slider {  get { return _slider; } }
+		private Slider slider;
 
 		private bool _isPointerDown;
 		private bool _isPlaying;
@@ -33,27 +33,24 @@ namespace rlmg.Tools.MediaPlayers
 
 			player.seekCompleted += SeekCompletedCallback;
 
-			_slider = GetComponent<Slider>();
+			slider = GetComponent<Slider>();
 
-			//OnDragged = new Action<float>((f) => { player.SeekTo(f,true); });
 			OnDragged = new Action<float>((f) => 
 				{
 					if (!player.isPrepared)
 					{
-						Debug.Log("Video not prepared.");
+						Debug.LogWarning("Video not prepared.");
 						return;
 					}
 
 					if (!player.canSetTime)
 					{
-						Debug.Log("Video doesn't allow setting time.");
+						Debug.LogWarning("Video doesn't allow setting time.");
 						return;
 					}
 
 					f = Mathf.Clamp(f, 0f, 1f);
 					player.time = f * Duration;
-
-					// Debug.Log("seek to "+player.time);
 
 					isMidSeek = true;
 				});
@@ -61,8 +58,6 @@ namespace rlmg.Tools.MediaPlayers
 
 		void SeekCompletedCallback(VideoPlayer vp)
 		{
-			// Debug.Log("seek completed");
-
 			isMidSeek = false;
 
 			finishedSeekingGraceFrameCount = finishedSeekingGraceFrames;
@@ -70,29 +65,28 @@ namespace rlmg.Tools.MediaPlayers
 
 		void Update()
 		{
-			if (_slider && !_isPointerDown && !wasPointerUpThisFrame && !isMidSeek && finishedSeekingGraceFrameCount <= 0)
+			if (slider != null && !_isPointerDown && !wasPointerUpThisFrame && !isMidSeek && finishedSeekingGraceFrameCount <= 0)
 			{
 				try
 				{
 					if (Duration > 0f)
 					{
-						_slider.value = Mathf.Clamp01(System.Convert.ToSingle(player.time / Duration));
+						slider.value = Mathf.Clamp01(System.Convert.ToSingle(player.time / Duration));
 					}
 					else
 					{
-						_slider.value = 0f;
+						slider.value = 0f;
 					}
 				}
 				catch (Exception)
 				{
 					Debug.Log("ERROR Converting double to float:");
 				}
-
-				//Debug.Log("GetCurrentPosition:" + _slider.value);
 			}
-			if (_slider && _isPointerDown)
+
+			if (slider != null && _isPointerDown)
 			{
-				_UpdateDrag();
+				UpdateDrag();
 			}
 
 			wasPointerUpThisFrame = false;
@@ -102,47 +96,41 @@ namespace rlmg.Tools.MediaPlayers
 
 		public void OnPointerDown(PointerEventData eventData)
 		{
-			// Debug.Log("OnPointerDown:");
-
 			_isPointerDown = true;
 
 			_isPlaying = player.isPlaying;
 
-			if (_isPlaying)
-			{
+			// if (_isPlaying)
+			// {
 				// player.Pause();
-			}
+			// }
 
-			_UpdateDrag();
+			UpdateDrag();
 		}
 
 		private bool wasPointerUpThisFrame = false;
 
 		public void OnPointerUp(PointerEventData eventData)
 		{
-			// Debug.Log("OnPointerUp:"+ eventData);
-
 			_isPointerDown = false;
 
-			_UpdateDrag();
+			UpdateDrag();
 
-			if (_isPlaying)
-			{ 
+			// if (_isPlaying)
+			// { 
 				// player.Play();
-			}
+			// }
 
 			wasPointerUpThisFrame = true;
 		}
 
-		private void _UpdateDrag()
+		private void UpdateDrag()
 		{
-			if (_slider)
+			if (slider)
 			{
-				// Debug.Log("_Seek:" + _slider.value);
-
 				if (OnDragged != null)
 				{
-					OnDragged(_slider.value);
+					OnDragged(slider.value);
 				}
 			}
 		}
