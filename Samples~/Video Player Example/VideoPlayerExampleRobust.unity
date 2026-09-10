@@ -658,6 +658,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VideoPlayer_RobustVariant
       objectReference: {fileID: 0}
+    - target: {fileID: 655540047667023622, guid: 5807bcea5d600454abe9e82faf37a1e5, type: 3}
+      propertyPath: doFadeIfLoading
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 834626455056562016, guid: 5807bcea5d600454abe9e82faf37a1e5, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -742,6 +746,10 @@ PrefabInstance:
       propertyPath: m_VideoClip
       value: 
       objectReference: {fileID: 32900000, guid: 547aa2d320386436aa82348fee8ccc76, type: 3}
+    - target: {fileID: 2421484010819006126, guid: 5807bcea5d600454abe9e82faf37a1e5, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3077687766319993476, guid: 5807bcea5d600454abe9e82faf37a1e5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
