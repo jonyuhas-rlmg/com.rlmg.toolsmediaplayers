@@ -1165,7 +1165,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1000013594102034, guid: 4e6d6e4dad7c5cc498fdf459fa2fa874, type: 3}
       propertyPath: m_Name
-      value: VideoPlayer_Robust Variant
+      value: VideoPlayer_RobustVariant
       objectReference: {fileID: 0}
     - target: {fileID: 114292820309900852, guid: 4e6d6e4dad7c5cc498fdf459fa2fa874, type: 3}
       propertyPath: fadeUpDuration
@@ -1259,10 +1259,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2960035269378121628, guid: 4e6d6e4dad7c5cc498fdf459fa2fa874, type: 3}
-      propertyPath: m_VideoClip
-      value: 
-      objectReference: {fileID: 32900000, guid: d0984fae8e561b24a9f183e22ba11cb9, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

@@ -543,11 +543,7 @@ PrefabInstance:
     - target: {fileID: 2960035269378121628, guid: 4e6d6e4dad7c5cc498fdf459fa2fa874, type: 3}
       propertyPath: m_VideoClip
       value: 
-      objectReference: {fileID: 32900000, guid: d0984fae8e561b24a9f183e22ba11cb9, type: 3}
-    - target: {fileID: 2960035269378121628, guid: 4e6d6e4dad7c5cc498fdf459fa2fa874, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 32900000, guid: 547aa2d320386436aa82348fee8ccc76, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
